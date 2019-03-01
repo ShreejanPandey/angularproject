@@ -1,0 +1,49 @@
+<?php
+session_start();
+require "connect.php";
+
+?>
+
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Baji</title>
+	</head>
+	<body>
+		<link rel="stylesheet" href="style_user_login.css">
+		<br><br><br>
+         <p align="right";><a href="GadgetHome.php" class="button" type="buttom">Click here</a> To go to Home page</p>
+<table align="center">
+	<form method="post" action="GadgetUserLogin.php">
+	<tr><td>User name:<br><br></td><td><input type="text" name="name" placeholder="Name here" style='text-align: center;'><br><br></td></tr>
+	<tr><Td>Password:<br><br></Td><td><input type="password" name="password"placeholder="Password here"style='text-align: center;' ><br><br></td></tr>
+	<div class="button"><tr><td><input type="submit" value="login" class="button" name="log" ></td></div>
+	<div class="button"><td>&nbsp&nbsp&nbsp&nbsp<a href="GadgetRegister.php"  ><button type="button" class="button">Register</button></a></td></div></tr>
+   
+</form>
+	</table>
+	<?php
+if (isset($_POST['log']))
+{
+    $name = $_POST['name'];
+    $password = $_POST['password'];
+
+    if (!empty($_POST['log']))
+    {
+        $query = ("select * from GadgetUsers where user_name='$name' and password='$password'");
+        $run_query = mysqli_query($connection, $query);
+        if (mysqli_num_rows($run_query))
+        {
+            $_SESSION['name'] = $name;
+            header("location:GadgetPrivateHome.php");
+        }
+
+        else
+        { ?>
+     <p style="text-align: center;font-size: 20px;color: red;">Username or Password is invalid</p>
+<?php
+        }
+    }
+} ?>
+</body>
+	</html>
